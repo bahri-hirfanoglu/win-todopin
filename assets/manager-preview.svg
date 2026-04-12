@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="520" viewBox="0 0 420 520">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#fdfbff"/>
+      <stop offset="60%" stop-color="#f4efff"/>
+      <stop offset="100%" stop-color="#ffeaf2"/>
+    </linearGradient>
+    <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff8a5b"/>
+      <stop offset="50%" stop-color="#f06192"/>
+      <stop offset="100%" stop-color="#9b7bf0"/>
+    </linearGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff8a5b"/>
+      <stop offset="100%" stop-color="#f06192"/>
+    </linearGradient>
+    <linearGradient id="peach" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE4D6"/>
+      <stop offset="100%" stop-color="#FFC8A8"/>
+    </linearGradient>
+    <linearGradient id="lavender" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EDE4FF"/>
+      <stop offset="100%" stop-color="#D4C2FF"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D8F5E3"/>
+      <stop offset="100%" stop-color="#A8E6C1"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="420" height="520" rx="12" fill="url(#bg)"/>
+
+  <!-- Header -->
+  <rect x="22" y="24" width="38" height="38" rx="12" fill="url(#logo)"/>
+  <text x="72" y="42" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#2a2140">Your cards</text>
+  <text x="72" y="58" font-family="Inter, system-ui, sans-serif" font-size="11" fill="#7a6a8f">Sticky todos, pinned anywhere on your desktop.</text>
+
+  <!-- New Card Button -->
+  <rect x="22" y="82" width="240" height="44" rx="14" fill="url(#btn)" filter="url(#shadow)"/>
+  <text x="142" y="109" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">+ New card</text>
+
+  <!-- Show/Hide buttons -->
+  <rect x="272" y="82" width="64" height="44" rx="12" fill="rgba(255,255,255,0.55)"/>
+  <text x="304" y="109" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500" fill="#5c4a7a" text-anchor="middle">Show all</text>
+  <rect x="342" y="82" width="56" height="44" rx="12" fill="rgba(255,255,255,0.55)"/>
+  <text x="370" y="109" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500" fill="#5c4a7a" text-anchor="middle">Hide all</text>
+
+  <!-- Card rows -->
+  <rect x="22" y="142" width="376" height="54" rx="14" fill="rgba(255,255,255,0.68)" stroke="rgba(155,123,240,0.1)" stroke-width="1"/>
+  <circle cx="40" cy="169" r="6" fill="url(#peach)"/>
+  <text x="56" y="165" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#2a2140">Shopping List</text>
+  <text x="56" y="180" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#7a6a8f">3 remaining</text>
+
+  <rect x="22" y="204" width="376" height="54" rx="14" fill="rgba(255,255,255,0.68)" stroke="rgba(155,123,240,0.1)" stroke-width="1"/>
+  <circle cx="40" cy="231" r="6" fill="url(#lavender)"/>
+  <text x="56" y="227" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#2a2140">Work Tasks</text>
+  <text x="56" y="242" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#7a6a8f">5 remaining</text>
+
+  <rect x="22" y="266" width="376" height="54" rx="14" fill="rgba(255,255,255,0.68)" stroke="rgba(155,123,240,0.1)" stroke-width="1"/>
+  <circle cx="40" cy="293" r="6" fill="url(#mint)"/>
+  <text x="56" y="289" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#2a2140">Fitness Goals</text>
+  <text x="56" y="304" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#7a6a8f">2 remaining</text>
+
+  <!-- Footer hint -->
+  <text x="210" y="500" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#7a6a8f" text-anchor="middle" opacity="0.6">TodoPin v0.1.0</text>
+</svg>
