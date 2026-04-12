@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TodoPin — Card</title>
+    <style>
+      body { margin: 0; background: transparent; }
+      .splash {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 18px; overflow: hidden;
+        background: linear-gradient(160deg, var(--bg-from, #FFE4D6), var(--bg-to, #FFC8A8));
+        transition: opacity 300ms ease;
+      }
+      .splash.fade-out { opacity: 0; pointer-events: none; }
+      .card-loader {
+        width: 28px; height: 28px;
+        border: 3px solid rgba(255,255,255,0.4);
+        border-top-color: rgba(255,255,255,0.9);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <script>
+      // Apply theme colors from URL params immediately
+      (function() {
+        var p = new URLSearchParams(window.location.search);
+        var themes = {
+          peach:    { f: "#FFE4D6", t: "#FFC8A8" },
+          lavender: { f: "#EDE4FF", t: "#D4C2FF" },
+          mint:     { f: "#D8F5E3", t: "#A8E6C1" },
+          sky:      { f: "#DCEEFF", t: "#B4DBFF" },
+          sunny:    { f: "#FFF4C2", t: "#FFE382" },
+          rose:     { f: "#FFD9E5", t: "#FFB3CE" },
+          slate:    { f: "#E8ECF1", t: "#C7CFDA" }
+        };
+        var th = themes[p.get("theme")] || themes.peach;
+        document.documentElement.style.setProperty("--bg-from", th.f);
+        document.documentElement.style.setProperty("--bg-to", th.t);
+      })();
+    </script>
+  </head>
+  <body data-window="card">
+    <div id="splash" class="splash">
+      <div class="card-loader"></div>
+    </div>
+    <div id="app"></div>
+    <script type="module" src="/src/card/main.ts"></script>
+  </body>
+</html>
