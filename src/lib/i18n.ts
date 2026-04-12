@@ -1,0 +1,125 @@
+import { writable, derived, get } from "svelte/store";
+import type { Language } from "./types";
+
+type Dict = Record<string, string>;
+
+const en: Dict = {
+  "app.name": "TodoPin",
+  "manager.title": "Your cards",
+  "manager.subtitle": "Sticky todos, pinned anywhere on your desktop.",
+  "manager.newCard": "New card",
+  "manager.empty": "No cards yet. Create your first one!",
+  "manager.settings": "Settings",
+  "manager.showAll": "Show all",
+  "manager.hideAll": "Hide all",
+  "manager.language": "Language",
+  "manager.autostart": "Launch at startup",
+  "manager.defaultTheme": "Default color",
+  "manager.about": "About",
+  "card.placeholder": "Add a todo…",
+  "card.untitled": "Untitled",
+  "card.add": "Add",
+  "card.empty": "Nothing yet. Start writing below.",
+  "card.delete": "Delete card",
+  "card.pin": "Always on top",
+  "card.widget": "Desktop widget",
+  "card.close": "Hide",
+  "card.confirmDelete": "Delete this card?",
+  "card.menu": "Menu",
+  "card.changeTheme": "Theme",
+  "common.yes": "Yes",
+  "common.no": "No",
+  "common.cancel": "Cancel",
+  "common.delete": "Delete",
+  "common.save": "Save",
+  "manager.shortcuts": "Keyboard shortcuts",
+  "shortcut.showAll": "Show all cards",
+  "shortcut.hideAll": "Hide all cards",
+  "shortcut.newCard": "New card",
+  "shortcut.openManager": "Open manager",
+  "shortcut.recording": "Press a key combo...",
+  "shortcut.clear": "Clear",
+  "manager.appTheme": "App theme",
+  "appTheme.default": "Default",
+  "appTheme.windows": "Windows",
+  "appTheme.macos": "macOS",
+  "appTheme.github": "GitHub",
+  "appTheme.nord": "Nord",
+  "appTheme.dracula": "Dracula",
+  "theme.peach": "Peach",
+  "theme.lavender": "Lavender",
+  "theme.mint": "Mint",
+  "theme.sky": "Sky",
+  "theme.sunny": "Sunny",
+  "theme.rose": "Rose",
+  "theme.slate": "Slate",
+};
+
+const tr: Dict = {
+  "app.name": "TodoPin",
+  "manager.title": "Kartların",
+  "manager.subtitle": "Masaüstünün istediğin yerine yapışan todo kartları.",
+  "manager.newCard": "Yeni kart",
+  "manager.empty": "Henüz kart yok. İlkini oluştur!",
+  "manager.settings": "Ayarlar",
+  "manager.showAll": "Hepsini göster",
+  "manager.hideAll": "Hepsini gizle",
+  "manager.language": "Dil",
+  "manager.autostart": "Açılışta başlat",
+  "manager.defaultTheme": "Varsayılan renk",
+  "manager.about": "Hakkında",
+  "card.placeholder": "Yeni görev…",
+  "card.untitled": "İsimsiz",
+  "card.add": "Ekle",
+  "card.empty": "Henüz bir şey yok. Aşağıdan yazmaya başla.",
+  "card.delete": "Kartı sil",
+  "card.pin": "Her zaman üstte",
+  "card.widget": "Masaüstü widget",
+  "card.close": "Gizle",
+  "card.confirmDelete": "Bu kartı silmek istediğine emin misin?",
+  "card.menu": "Menü",
+  "card.changeTheme": "Renk",
+  "common.yes": "Evet",
+  "common.no": "Hayır",
+  "common.cancel": "Vazgeç",
+  "common.delete": "Sil",
+  "common.save": "Kaydet",
+  "manager.shortcuts": "Klavye kısayolları",
+  "shortcut.showAll": "Tüm kartları göster",
+  "shortcut.hideAll": "Tüm kartları gizle",
+  "shortcut.newCard": "Yeni kart",
+  "shortcut.openManager": "Yöneticiyi aç",
+  "shortcut.recording": "Bir tuş kombinasyonu gir...",
+  "shortcut.clear": "Temizle",
+  "manager.appTheme": "Uygulama teması",
+  "appTheme.default": "Varsayılan",
+  "appTheme.windows": "Windows",
+  "appTheme.macos": "macOS",
+  "appTheme.github": "GitHub",
+  "appTheme.nord": "Nord",
+  "appTheme.dracula": "Dracula",
+  "theme.peach": "Şeftali",
+  "theme.lavender": "Lavanta",
+  "theme.mint": "Nane",
+  "theme.sky": "Gökyüzü",
+  "theme.sunny": "Güneşli",
+  "theme.rose": "Gül",
+  "theme.slate": "Arduvaz",
+};
+
+const dictionaries: Record<Language, Dict> = { en, tr };
+
+export const language = writable<Language>("tr");
+
+export const t = derived(language, ($lang) => (key: string) => {
+  const dict = dictionaries[$lang];
+  return dict[key] ?? dictionaries.en[key] ?? key;
+});
+
+export function translate(key: string): string {
+  return get(t)(key);
+}
+
+export function setLanguage(lang: Language) {
+  language.set(lang);
+}
