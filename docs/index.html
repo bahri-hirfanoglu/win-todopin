@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TodoPin — Pinnable Todo Cards for Windows</title>
+  <meta name="description" content="Cute, frameless todo cards that float on your Windows desktop. Pin them anywhere, customize colors, and keep your tasks always in sight.">
+  <meta name="theme-color" content="#f06192">
+  <meta property="og:title" content="TodoPin">
+  <meta property="og:description" content="Cute, pinnable todo cards for your Windows desktop.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bahri-hirfanoglu.github.io/win-todopin/">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Animated background blobs -->
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <div class="nav-logo">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="white" opacity="0.9">
+            <path d="M16 9V4l1 0a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1l1 0v5l-3 3v2h6v6l1 2 1-2v-6h6v-2l-3-3z"/>
+          </svg>
+        </div>
+        <span>TodoPin</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#themes">Themes</a>
+        <a href="#download">Download</a>
+        <a href="https://github.com/bahri-hirfanoglu/win-todopin" class="nav-github" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">v0.1.0 &mdash; Now Available</div>
+      <h1 class="hero-title">
+        Pin your todos.<br>
+        <span class="gradient-text">Anywhere on your desktop.</span>
+      </h1>
+      <p class="hero-desc">
+        Cute, frameless todo cards that float on your Windows desktop.
+        Drag them anywhere, pick your colors, and never lose track of what matters.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/bahri-hirfanoglu/win-todopin/releases/latest" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download for Windows
+        </a>
+        <a href="https://github.com/bahri-hirfanoglu/win-todopin" class="btn btn-ghost">
+          View on GitHub
+        </a>
+      </div>
+      <p class="hero-meta">Windows 10/11 &bull; ~3 MB &bull; Free &amp; Open Source</p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-cards-scene">
+        <!-- Floating card mockups -->
+        <div class="float-card float-card-1">
+          <div class="fc-header">
+            <span class="fc-title">Shopping List</span>
+            <span class="fc-pin">📌</span>
+          </div>
+          <div class="fc-item"><span class="fc-check"></span>Milk &amp; eggs</div>
+          <div class="fc-item"><span class="fc-check"></span>Fresh bread</div>
+          <div class="fc-item done"><span class="fc-check checked"></span>Coffee beans</div>
+          <div class="fc-item"><span class="fc-check"></span>Olive oil</div>
+        </div>
+        <div class="float-card float-card-2">
+          <div class="fc-header">
+            <span class="fc-title">Work Tasks</span>
+            <span class="fc-pin">📌</span>
+          </div>
+          <div class="fc-item"><span class="fc-check"></span>Review PRs</div>
+          <div class="fc-item done"><span class="fc-check checked"></span>Deploy staging</div>
+          <div class="fc-item"><span class="fc-check"></span>Write tests</div>
+        </div>
+        <div class="float-card float-card-3">
+          <div class="fc-header">
+            <span class="fc-title">Ideas</span>
+            <span class="fc-pin">📌</span>
+          </div>
+          <div class="fc-item"><span class="fc-check"></span>Blog post draft</div>
+          <div class="fc-item"><span class="fc-check"></span>Side project</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <h2 class="section-title">Everything you need, nothing you don't.</h2>
+      <p class="section-desc">TodoPin is designed to be simple, fast, and stay out of your way.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="--fi-color: #f06192">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/></svg>
+          </div>
+          <h3>Frameless Windows</h3>
+          <p>No title bars, no distractions. Just your todos floating cleanly on the desktop.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="--fi-color: #9b7bf0">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M16 9V4l1 0a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1l1 0v5l-3 3v2h6v6l1 2 1-2v-6h6v-2l-3-3z"/></svg>
+          </div>
+          <h3>Pin Anywhere</h3>
+          <p>Drag cards to any position, any monitor. They stay exactly where you put them.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="--fi-color: #ff8a5b">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </div>
+          <h3>Beautiful Themes</h3>
+          <p>7 card colors and 6 app themes including GitHub Dark, Nord, and Dracula.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="--fi-color: #5ba6f2">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Multi-Monitor</h3>
+          <p>Full multi-monitor support with DPI-aware positioning. Cards remember their spot.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="--fi-color: #4fbe7f">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </div>
+          <h3>Keyboard Shortcuts</h3>
+          <p>Global hotkeys that work even when TodoPin isn't focused. Fully customizable.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="--fi-color: #f5b800">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Lightweight &amp; Private</h3>
+          <p>~3 MB installer, minimal memory usage. All data stays local on your machine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Themes Showcase -->
+  <section class="themes" id="themes">
+    <div class="section-inner">
+      <h2 class="section-title">Make it yours.</h2>
+      <p class="section-desc">Choose from 7 card colors and 6 app-wide UI themes.</p>
+
+      <div class="theme-showcase">
+        <h3 class="showcase-label">Card Colors</h3>
+        <div class="color-pills">
+          <div class="color-pill" style="--pill-from: #FFE4D6; --pill-to: #FFC8A8"><span>Peach</span></div>
+          <div class="color-pill" style="--pill-from: #EDE4FF; --pill-to: #D4C2FF"><span>Lavender</span></div>
+          <div class="color-pill" style="--pill-from: #D8F5E3; --pill-to: #A8E6C1"><span>Mint</span></div>
+          <div class="color-pill" style="--pill-from: #DCEEFF; --pill-to: #B4DBFF"><span>Sky</span></div>
+          <div class="color-pill" style="--pill-from: #FFF4C2; --pill-to: #FFE382"><span>Sunny</span></div>
+          <div class="color-pill" style="--pill-from: #FFD9E5; --pill-to: #FFB3CE"><span>Rose</span></div>
+          <div class="color-pill" style="--pill-from: #E8ECF1; --pill-to: #C7CFDA"><span>Slate</span></div>
+        </div>
+      </div>
+
+      <div class="theme-showcase">
+        <h3 class="showcase-label">App Themes</h3>
+        <div class="app-themes-grid">
+          <div class="app-theme-card">
+            <div class="atc-preview" style="background: linear-gradient(160deg, #fdfbff, #f4efff 60%, #ffeaf2)">
+              <div class="atc-accent" style="background: linear-gradient(135deg, #ff8a5b, #f06192)"></div>
+              <div class="atc-bar" style="background: rgba(255,255,255,0.7)"></div>
+              <div class="atc-bar short" style="background: rgba(255,255,255,0.5)"></div>
+            </div>
+            <span>Default</span>
+          </div>
+          <div class="app-theme-card">
+            <div class="atc-preview" style="background: linear-gradient(180deg, #f3f3f3, #e8e8e8)">
+              <div class="atc-accent" style="background: linear-gradient(135deg, #0078d4, #005a9e)"></div>
+              <div class="atc-bar" style="background: rgba(255,255,255,0.85)"></div>
+              <div class="atc-bar short" style="background: rgba(255,255,255,0.6)"></div>
+            </div>
+            <span>Windows</span>
+          </div>
+          <div class="app-theme-card">
+            <div class="atc-preview" style="background: linear-gradient(180deg, #fafafa, #f0f0f2)">
+              <div class="atc-accent" style="background: linear-gradient(180deg, #42a1ff, #007aff)"></div>
+              <div class="atc-bar" style="background: rgba(0,0,0,0.04)"></div>
+              <div class="atc-bar short" style="background: rgba(0,0,0,0.03)"></div>
+            </div>
+            <span>macOS</span>
+          </div>
+          <div class="app-theme-card">
+            <div class="atc-preview" style="background: linear-gradient(180deg, #0d1117, #161b22)">
+              <div class="atc-accent" style="background: linear-gradient(180deg, #2ea043, #238636)"></div>
+              <div class="atc-bar" style="background: rgba(110,118,129,0.2)"></div>
+              <div class="atc-bar short" style="background: rgba(110,118,129,0.12)"></div>
+            </div>
+            <span>GitHub</span>
+          </div>
+          <div class="app-theme-card">
+            <div class="atc-preview" style="background: linear-gradient(160deg, #2e3440, #3b4252)">
+              <div class="atc-accent" style="background: linear-gradient(135deg, #88c0d0, #5e81ac)"></div>
+              <div class="atc-bar" style="background: rgba(216,222,233,0.1)"></div>
+              <div class="atc-bar short" style="background: rgba(216,222,233,0.06)"></div>
+            </div>
+            <span>Nord</span>
+          </div>
+          <div class="app-theme-card">
+            <div class="atc-preview" style="background: linear-gradient(160deg, #282a36, #1e1f29)">
+              <div class="atc-accent" style="background: linear-gradient(135deg, #bd93f9, #ff79c6)"></div>
+              <div class="atc-bar" style="background: rgba(248,248,242,0.08)"></div>
+              <div class="atc-bar short" style="background: rgba(248,248,242,0.04)"></div>
+            </div>
+            <span>Dracula</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shortcuts -->
+  <section class="shortcuts">
+    <div class="section-inner">
+      <h2 class="section-title">Fast by default.</h2>
+      <p class="section-desc">Global shortcuts that work even when TodoPin isn't focused. Fully customizable.</p>
+      <div class="shortcut-grid">
+        <div class="shortcut-item">
+          <div class="key-combo"><kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>N</kbd></div>
+          <span class="shortcut-action">New card</span>
+        </div>
+        <div class="shortcut-item">
+          <div class="key-combo"><kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>S</kbd></div>
+          <span class="shortcut-action">Show all cards</span>
+        </div>
+        <div class="shortcut-item">
+          <div class="key-combo"><kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>H</kbd></div>
+          <span class="shortcut-action">Hide all cards</span>
+        </div>
+        <div class="shortcut-item">
+          <div class="key-combo"><kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>M</kbd></div>
+          <span class="shortcut-action">Open manager</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="tech">
+    <div class="section-inner">
+      <h2 class="section-title">Built with modern tools.</h2>
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="tech-icon">🦀</div>
+          <div><strong>Rust</strong><br><span>Backend &amp; system APIs</span></div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">⚡</div>
+          <div><strong>Tauri v2</strong><br><span>Native desktop framework</span></div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">🔥</div>
+          <div><strong>Svelte 5</strong><br><span>Reactive UI with runes</span></div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-icon">📦</div>
+          <div><strong>Vite</strong><br><span>Lightning-fast bundler</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download CTA -->
+  <section class="cta" id="download">
+    <div class="section-inner">
+      <h2 class="cta-title">Ready to get organized?</h2>
+      <p class="cta-desc">Download TodoPin and start pinning your todos to the desktop.</p>
+      <div class="cta-actions">
+        <a href="https://github.com/bahri-hirfanoglu/win-todopin/releases/latest" class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download v0.1.0
+        </a>
+        <a href="https://github.com/bahri-hirfanoglu/win-todopin" class="btn btn-ghost btn-lg">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Source Code
+        </a>
+      </div>
+      <div class="cta-info">
+        <span>Windows 10/11</span>
+        <span>&bull;</span>
+        <span>x64</span>
+        <span>&bull;</span>
+        <span>MIT License</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="section-inner">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="nav-logo small">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="white" opacity="0.9">
+              <path d="M16 9V4l1 0a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1l1 0v5l-3 3v2h6v6l1 2 1-2v-6h6v-2l-3-3z"/>
+            </svg>
+          </div>
+          <span>TodoPin</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/bahri-hirfanoglu/win-todopin/releases">Releases</a>
+          <a href="https://github.com/bahri-hirfanoglu/win-todopin/issues">Issues</a>
+          <a href="https://github.com/bahri-hirfanoglu/win-todopin/blob/main/CONTRIBUTING.md">Contributing</a>
+          <a href="https://github.com/bahri-hirfanoglu/win-todopin/blob/main/LICENSE">License</a>
+        </div>
+        <p class="footer-copy">Made by <a href="https://github.com/bahri-hirfanoglu">Bahri Hirfanoglu</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
