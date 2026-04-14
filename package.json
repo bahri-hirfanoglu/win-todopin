@@ -1,7 +1,7 @@
 {
   "name": "win-todopin",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,9 @@
     "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
     "@fontsource-variable/space-grotesk": "^5.2.10",
     "@tauri-apps/api": "^2.1.1",
-    "@tauri-apps/plugin-autostart": "^2.0.0"
+    "@tauri-apps/plugin-autostart": "^2.0.0",
+    "@tauri-apps/plugin-process": "^2.3.1",
+    "@tauri-apps/plugin-updater": "^2.10.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^4.0.0",

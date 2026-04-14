@@ -19,3 +19,6 @@ Thumbs.db
 # Environment
 .env
 .env.*
+
+# Tauri updater signing keys — NEVER commit the private key
+.tauri/
