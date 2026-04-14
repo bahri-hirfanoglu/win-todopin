@@ -18,6 +18,40 @@ use crate::storage::Storage;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // When Windows launches us from the autostart registry entry the process
+    // inherits `C:\Windows\System32` as its working directory, which breaks
+    // WebView2's default user-data folder resolution and yields a
+    // "site can't be loaded" page on first navigation. Re-anchor CWD to the
+    // installed exe directory before Tauri initializes any webview.
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(dir) = exe.parent() {
+            let _ = std::env::set_current_dir(dir);
+        }
+    }
+
+    // Pin the WebView2 user-data folder to %LOCALAPPDATA% explicitly so it
+    // never depends on CWD and survives autostart cold-boot races.
+    #[cfg(windows)]
+    if std::env::var_os("WEBVIEW2_USER_DATA_FOLDER").is_none() {
+        if let Some(local) = std::env::var_os("LOCALAPPDATA") {
+            let mut path = std::path::PathBuf::from(local);
+            path.push("com.todopin.app");
+            path.push("EBWebView");
+            let _ = std::fs::create_dir_all(&path);
+            std::env::set_var("WEBVIEW2_USER_DATA_FOLDER", path);
+        }
+    }
+
+    // On autostart (`--hidden`) WebView2's host process often hasn't
+    // finished spinning up by the time Tauri issues its first navigation,
+    // so the webview renders an ERR_CONNECTION_FAILED page. A short pause
+    // gives the runtime time to be ready before any window is built.
+    let launched_hidden =
+        std::env::args().any(|a| a == "--hidden");
+    if launched_hidden {
+        thread::sleep(Duration::from_millis(1500));
+    }
+
     tauri::Builder::default()
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_autostart::init(
