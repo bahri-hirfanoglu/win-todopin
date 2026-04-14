@@ -1,0 +1,96 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)build (e.g. v0.3.1)"
+        required: true
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build & upload signed release
+        id: tauri
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          tagName: ${{ github.event.inputs.tag || github.ref_name }}
+          releaseName: "${{ github.event.inputs.tag || github.ref_name }}"
+          releaseBody: "See the assets below to download and install this version. Existing installs will auto-update."
+          releaseDraft: false
+          prerelease: false
+          args: --bundles nsis
+
+      - name: Assemble latest.json
+        id: manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          BUNDLE_DIR="src-tauri/target/release/bundle/nsis"
+          EXE_PATH=$(ls "$BUNDLE_DIR"/*-setup.exe | head -n1)
+          SIG_PATH="${EXE_PATH}.sig"
+          if [ ! -f "$SIG_PATH" ]; then
+            echo "Missing signature for $EXE_PATH — aborting." >&2
+            exit 1
+          fi
+          EXE_NAME=$(basename "$EXE_PATH")
+          SIG_CONTENT=$(cat "$SIG_PATH")
+          URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/${EXE_NAME}"
+          PUB_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          jq -n \
+            --arg v "$VERSION" \
+            --arg s "$SIG_CONTENT" \
+            --arg u "$URL" \
+            --arg d "$PUB_DATE" \
+            --arg t "$TAG" \
+            '{version:$v, notes:("Auto-generated manifest for " + $t + "."), pub_date:$d, platforms:{"windows-x86_64":{signature:$s, url:$u}}}' \
+            > latest.json
+          cat latest.json
+
+      - name: Upload latest.json to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          gh release upload "$TAG" latest.json --clobber --repo "${{ github.repository }}"
