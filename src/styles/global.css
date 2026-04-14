@@ -1,10 +1,18 @@
 :root {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Helvetica Neue", Arial, sans-serif;
+  --app-font: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", "Inter Variable",
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --app-title-font: var(--app-font);
+  --app-letter-spacing: -0.01em;
+  --app-title-weight: 700;
+
+  font-family: var(--app-font);
   font-size: 14px;
+  letter-spacing: var(--app-letter-spacing);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -20,10 +28,19 @@ body,
   width: 100%;
   overflow: hidden;
   background: transparent;
+  font-family: var(--app-font);
+  letter-spacing: var(--app-letter-spacing);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--app-title-font);
+  font-weight: var(--app-title-weight);
 }
 
 button {
   font: inherit;
+  font-family: var(--app-font);
+  letter-spacing: var(--app-letter-spacing);
   color: inherit;
   background: none;
   border: none;
@@ -40,6 +57,8 @@ button:focus-visible {
 input,
 textarea {
   font: inherit;
+  font-family: var(--app-font);
+  letter-spacing: var(--app-letter-spacing);
   color: inherit;
   background: none;
   border: none;
@@ -64,4 +83,10 @@ textarea {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--app-scroll-thumb, rgba(0, 0, 0, 0.28));
+}
+
+/* Windows-mica accent hint on scrollbar when the theme is flat */
+html[data-app-theme="windows"] ::-webkit-scrollbar-thumb,
+html[data-app-theme="github"] ::-webkit-scrollbar-thumb {
+  border-radius: 2px;
 }

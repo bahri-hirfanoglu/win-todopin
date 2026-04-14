@@ -11,13 +11,14 @@ body[data-window="card"] {
   padding: 14px 14px 12px;
   background: linear-gradient(160deg, var(--bg-from), var(--bg-to));
   color: var(--text);
-  border-radius: 18px;
+  border-radius: var(--card-radius, 18px);
   box-shadow:
-    0 20px 50px var(--shadow),
-    0 2px 6px rgba(0, 0, 0, 0.06),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+    var(--card-shadow, 0 20px 50px var(--shadow), 0 2px 6px rgba(0, 0, 0, 0.06)),
+    var(--card-inner-border, inset 0 0 0 1px rgba(255, 255, 255, 0.45));
+  backdrop-filter: var(--card-backdrop, blur(0px));
+  -webkit-backdrop-filter: var(--card-backdrop, blur(0px));
   overflow: hidden;
-  transition: background 250ms ease, box-shadow 250ms ease;
+  transition: background 250ms ease, box-shadow 250ms ease, border-radius 250ms ease;
   animation: card-in 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }
 
@@ -38,10 +39,13 @@ body[data-window="card"] {
   left: -20%;
   width: 140%;
   height: 80%;
-  background: radial-gradient(
-    ellipse at top,
-    rgba(255, 255, 255, 0.55),
-    transparent 60%
+  background: var(
+    --card-glow,
+    radial-gradient(
+      ellipse at top,
+      rgba(255, 255, 255, 0.55),
+      transparent 60%
+    )
   );
   pointer-events: none;
 }
@@ -69,11 +73,12 @@ body[data-window="card"] {
   flex: 1;
   min-width: 0;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: var(--app-title-weight, 700);
+  font-family: var(--app-title-font, inherit);
   color: var(--text);
   background: transparent;
   padding: 4px 2px;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--app-letter-spacing, -0.01em);
 }
 .title-input::placeholder {
   color: var(--text-muted);
@@ -97,7 +102,7 @@ body[data-window="card"] {
   transition: background 120ms ease, color 120ms ease, transform 120ms ease;
 }
 .head-btn:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--card-btn-hover, rgba(255, 255, 255, 0.5));
   color: var(--text);
   transform: translateY(-1px);
 }
@@ -107,15 +112,18 @@ body[data-window="card"] {
   top: 44px;
   right: 14px;
   z-index: 5;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--menu-surface, rgba(255, 255, 255, 0.9));
+  border: var(--menu-border, 1px solid rgba(255, 255, 255, 0.6));
   backdrop-filter: blur(14px);
-  border-radius: 12px;
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: calc(var(--card-radius, 18px) - 4px);
   padding: 10px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--menu-shadow, 0 12px 30px rgba(0, 0, 0, 0.18));
   display: flex;
   flex-direction: column;
   gap: 8px;
   min-width: 180px;
+  color: var(--text);
   animation: menu-in 160ms ease;
 }
 @keyframes menu-in {
@@ -130,7 +138,7 @@ body[data-window="card"] {
 }
 .menu-label {
   font-size: 11px;
-  color: #7a6a8f;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 600;
@@ -151,7 +159,7 @@ body[data-window="card"] {
   transform: translateY(-2px);
 }
 .swatch.active {
-  border-color: #2a2140;
+  border-color: var(--text);
 }
 .menu-item {
   display: inline-flex;
@@ -160,18 +168,18 @@ body[data-window="card"] {
   padding: 6px 8px;
   border-radius: 8px;
   font-size: 12px;
-  color: #2a2140;
+  color: var(--text);
   background: transparent;
   transition: background 120ms ease;
 }
 .menu-item:hover {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--card-btn-hover, rgba(0, 0, 0, 0.06));
 }
 .menu-item.danger {
-  color: #d23353;
+  color: var(--app-danger, #d23353);
 }
 .menu-item.danger:hover {
-  background: rgba(210, 51, 83, 0.1);
+  background: var(--app-danger-bg, rgba(210, 51, 83, 0.1));
 }
 
 .body {
@@ -218,7 +226,7 @@ body[data-window="card"] {
   }
 }
 .todo:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--card-btn-hover, rgba(255, 255, 255, 0.4));
 }
 .todo:hover .todo-del {
   opacity: 1;
@@ -227,7 +235,7 @@ body[data-window="card"] {
 .check {
   width: 18px;
   height: 18px;
-  border-radius: 6px;
+  border-radius: var(--check-radius, 6px);
   background: rgba(255, 255, 255, 0.55);
   border: 2px solid var(--accent-soft);
   display: inline-flex;
@@ -271,8 +279,8 @@ body[data-window="card"] {
   transition: opacity 120ms ease, color 120ms ease, background 120ms ease;
 }
 .todo-del:hover {
-  color: #d23353;
-  background: rgba(210, 51, 83, 0.1);
+  color: var(--app-danger, #d23353);
+  background: var(--app-danger-bg, rgba(210, 51, 83, 0.1));
 }
 
 .clear-done {
@@ -282,11 +290,11 @@ body[data-window="card"] {
   color: var(--text-muted);
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--foot-surface, rgba(255, 255, 255, 0.5));
   transition: background 120ms ease;
 }
 .clear-done:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--card-btn-hover, rgba(255, 255, 255, 0.85));
 }
 
 .foot {
@@ -295,16 +303,16 @@ body[data-window="card"] {
   gap: 6px;
   margin-top: 10px;
   padding: 4px 4px 4px 10px;
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: var(--foot-surface, rgba(255, 255, 255, 0.55));
+  border-radius: calc(var(--card-radius, 18px) - 6px);
+  border: var(--foot-border, 1px solid rgba(255, 255, 255, 0.6));
   flex-shrink: 0;
   position: relative;
   z-index: 1;
   transition: background 140ms ease, border-color 140ms ease;
 }
 .foot:focus-within {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--menu-surface, rgba(255, 255, 255, 0.8));
   border-color: var(--accent);
 }
 .add-input {
@@ -322,7 +330,7 @@ body[data-window="card"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
+  border-radius: calc(var(--card-radius, 18px) - 9px);
   background: var(--accent);
   color: white;
   transition: transform 120ms ease, background 120ms ease, opacity 120ms ease;
@@ -347,4 +355,48 @@ body[data-window="card"] {
   text-transform: uppercase;
   opacity: 0.55;
   pointer-events: none;
+}
+
+/* ---- Theme-specific tweaks that don't fit a single CSS var ---- */
+
+/* macOS: slightly smaller heading, tighter vertical rhythm */
+html[data-app-theme="macos"] .title-input {
+  font-size: 14px;
+  font-weight: 600;
+}
+html[data-app-theme="macos"] .foot {
+  padding: 5px 5px 5px 11px;
+}
+
+/* Windows: tighter, flatter — Mica aesthetic */
+html[data-app-theme="windows"] .card {
+  padding: 12px 12px 10px;
+}
+html[data-app-theme="windows"] .title-input {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* GitHub: monospace-ish vibe for todo titles keeps Inter but bumps tracking */
+html[data-app-theme="github"] .title-input,
+html[data-app-theme="github"] .add-input {
+  letter-spacing: -0.01em;
+}
+
+/* Dracula: inner purple rim enhancing the neon feel.
+   (An outer halo can't be drawn because .card has overflow:hidden; we lean on
+   box-shadow from --card-shadow plus a stronger inner edge here.) */
+html[data-app-theme="dracula"] .card {
+  box-shadow:
+    0 20px 50px rgba(189, 147, 249, 0.28),
+    0 6px 18px rgba(40, 42, 54, 0.65),
+    inset 0 0 0 1px rgba(189, 147, 249, 0.28),
+    inset 0 1px 0 rgba(248, 248, 242, 0.06);
+}
+html[data-app-theme="dracula"] .card-glow {
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 121, 198, 0.22),
+    transparent 55%
+  );
 }
