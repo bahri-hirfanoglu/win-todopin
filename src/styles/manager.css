@@ -1,6 +1,14 @@
 body[data-window="manager"] {
   background: var(--app-bg-gradient, linear-gradient(160deg, #fdfbff 0%, #f4efff 60%, #ffeaf2 100%));
   color: var(--app-text, #2a2140);
+  font-family: var(--app-font);
+  letter-spacing: var(--app-letter-spacing, -0.01em);
+}
+
+body[data-window="manager"] h1,
+body[data-window="manager"] .card-title {
+  font-family: var(--app-title-font, var(--app-font));
+  font-weight: var(--app-title-weight, 700);
 }
 
 .manager {
@@ -363,11 +371,24 @@ input[type="checkbox"]:checked::after {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border-radius: 14px;
+  border-radius: calc(var(--card-radius, 18px) - 4px);
   background: var(--app-surface, rgba(255, 255, 255, 0.68));
   backdrop-filter: blur(8px);
   border: 1px solid var(--app-surface-border, rgba(155, 123, 240, 0.1));
-  transition: transform 120ms ease, box-shadow 120ms ease;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-radius 180ms ease;
+}
+
+/* Theme-specific manager tweaks */
+html[data-app-theme="windows"] .card-frame,
+html[data-app-theme="github"] .card-frame {
+  border-radius: 8px;
+}
+html[data-app-theme="macos"] .logo-dot {
+  border-radius: 10px;
+}
+html[data-app-theme="dracula"] .logo-dot {
+  box-shadow: 0 8px 24px var(--app-logo-shadow),
+    0 0 0 1px rgba(189, 147, 249, 0.35);
 }
 .card-row:hover {
   transform: translateY(-1px);
