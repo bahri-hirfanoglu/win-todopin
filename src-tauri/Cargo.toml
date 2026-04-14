@@ -1,6 +1,6 @@
 [package]
 name = "win-todopin"
-version = "0.2.0"
+version = "0.3.0"
 description = "Cute, pinnable todo cards for your Windows desktop"
 authors = ["you"]
 edition = "2021"
@@ -17,6 +17,8 @@ tauri-build = { version = "2.0.3", features = [] }
 tauri = { version = "2.1.1", features = ["tray-icon", "image-png"] }
 tauri-plugin-autostart = "2.0.0"
 tauri-plugin-global-shortcut = "2.0.0"
+tauri-plugin-updater = "2.0.0"
+tauri-plugin-process = "2.0.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 uuid = { version = "1.10", features = ["v4", "serde"] }

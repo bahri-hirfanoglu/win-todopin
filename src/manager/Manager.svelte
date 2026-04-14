@@ -7,8 +7,11 @@
   import { language, t, setLanguage } from "$lib/i18n";
   import { themes, themeList } from "$lib/themes";
   import { appThemes, appThemeList, applyAppTheme } from "$lib/appThemes";
+  import { updater, type UpdateStatus } from "$lib/updater";
   import ConfirmDialog from "$lib/ConfirmDialog.svelte";
   import type { AppSettings, AppTheme, Card, CardTheme, Language, ShortcutAction } from "$lib/types";
+
+  let updateStatus = $state<UpdateStatus>({ kind: "idle" });
 
   let cards = $state<Card[]>([]);
   let settings = $state<AppSettings | null>(null);
@@ -167,10 +170,27 @@
       listen("card-changed", () => refresh()),
       listen("settings-changed", () => refresh()),
     ];
+    const unsubscribeUpdater = updater.subscribe((s) => (updateStatus = s));
+    // Silent background update check shortly after launch.
+    setTimeout(() => {
+      void updater.check();
+    }, 1200);
     return () => {
       unlistens.forEach((p) => p.then((fn) => fn()));
+      unsubscribeUpdater();
     };
   });
+
+  function formatUpdateMessage(tpl: string, version: string): string {
+    return tpl.replace("{v}", version);
+  }
+
+  function downloadPercent(
+    s: Extract<UpdateStatus, { kind: "downloading" }>
+  ): number | null {
+    if (!s.total || s.total <= 0) return null;
+    return Math.min(100, Math.round((s.downloaded / s.total) * 100));
+  }
 </script>
 
 <main class="manager">
@@ -198,6 +218,45 @@
       </svg>
     </button>
   </header>
+
+  {#if updateStatus.kind === "available"}
+    <div class="update-banner available">
+      <div class="update-banner-text">
+        <span class="update-banner-dot"></span>
+        {formatUpdateMessage($t("update.available"), updateStatus.version)}
+      </div>
+      <div class="update-banner-actions">
+        <button class="update-banner-primary" onclick={() => updater.installAndRestart()}>
+          {$t("update.install")}
+        </button>
+        <button class="update-banner-secondary" onclick={() => updater.dismiss()} aria-label={$t("update.dismiss")}>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+        </button>
+      </div>
+    </div>
+  {:else if updateStatus.kind === "downloading"}
+    <div class="update-banner downloading">
+      <div class="update-banner-text">
+        <span class="update-banner-spinner"></span>
+        {$t("update.downloading")}
+        {#if downloadPercent(updateStatus) !== null}
+          · {downloadPercent(updateStatus)}%
+        {/if}
+      </div>
+      {#if downloadPercent(updateStatus) !== null}
+        <div class="update-progress">
+          <div class="update-progress-bar" style:width="{downloadPercent(updateStatus)}%"></div>
+        </div>
+      {/if}
+    </div>
+  {:else if updateStatus.kind === "ready"}
+    <div class="update-banner ready">
+      <div class="update-banner-text">
+        <span class="update-banner-dot"></span>
+        {$t("update.ready")}
+      </div>
+    </div>
+  {/if}
 
   <div class="actions">
     <button class="primary" onclick={handleNew}>
@@ -271,6 +330,37 @@
           {/each}
         </div>
       </div>
+      <div class="updates-section">
+        <span class="setting-label">{$t("update.section")}</span>
+        <div class="updates-row">
+          <span class="updates-status">
+            {#if updateStatus.kind === "idle"}
+              v{__APP_VERSION__}
+            {:else if updateStatus.kind === "checking"}
+              {$t("update.checking")}
+            {:else if updateStatus.kind === "upToDate"}
+              {$t("update.upToDate")}
+            {:else if updateStatus.kind === "available"}
+              {formatUpdateMessage($t("update.available"), updateStatus.version)}
+            {:else if updateStatus.kind === "downloading"}
+              {$t("update.downloading")}
+              {#if downloadPercent(updateStatus) !== null} · {downloadPercent(updateStatus)}%{/if}
+            {:else if updateStatus.kind === "ready"}
+              {$t("update.ready")}
+            {:else if updateStatus.kind === "error"}
+              {$t("update.error")}
+            {/if}
+          </span>
+          <button
+            class="ghost small"
+            onclick={() => updater.check()}
+            disabled={updateStatus.kind === "checking" || updateStatus.kind === "downloading"}
+          >
+            {$t("update.check")}
+          </button>
+        </div>
+      </div>
+
       <div class="shortcuts-section">
         <span class="setting-label">{$t("manager.shortcuts")}</span>
         <div class="shortcuts-list">

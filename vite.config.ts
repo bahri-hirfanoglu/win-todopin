@@ -1,9 +1,14 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { resolve } from "path";
+import { readFileSync } from "fs";
 
 // Tauri expects a fixed port, fail if not available
 const host = process.env.TAURI_DEV_HOST;
+
+const pkg = JSON.parse(
+  readFileSync(resolve(__dirname, "package.json"), "utf-8")
+) as { version: string };
 
 export default defineConfig(async () => ({
   plugins: [svelte()],
@@ -11,6 +16,9 @@ export default defineConfig(async () => ({
     alias: {
       $lib: resolve(__dirname, "src/lib"),
     },
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
   },
   clearScreen: false,
   server: {

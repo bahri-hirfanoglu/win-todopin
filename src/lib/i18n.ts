@@ -53,6 +53,16 @@ const en: Dict = {
   "theme.sunny": "Sunny",
   "theme.rose": "Rose",
   "theme.slate": "Slate",
+  "update.check": "Check for updates",
+  "update.checking": "Checking for updates…",
+  "update.upToDate": "You're on the latest version",
+  "update.available": "Version {v} is available",
+  "update.downloading": "Downloading update…",
+  "update.ready": "Update ready — restarting…",
+  "update.install": "Install & restart",
+  "update.dismiss": "Dismiss",
+  "update.error": "Update check failed",
+  "update.section": "Updates",
 };
 
 const tr: Dict = {
@@ -105,6 +115,16 @@ const tr: Dict = {
   "theme.sunny": "Güneşli",
   "theme.rose": "Gül",
   "theme.slate": "Arduvaz",
+  "update.check": "Güncelleme ara",
+  "update.checking": "Güncelleme kontrol ediliyor…",
+  "update.upToDate": "Son sürümdesin",
+  "update.available": "Sürüm {v} kullanılabilir",
+  "update.downloading": "Güncelleme indiriliyor…",
+  "update.ready": "Güncelleme hazır — yeniden başlatılıyor…",
+  "update.install": "Yükle ve yeniden başlat",
+  "update.dismiss": "Kapat",
+  "update.error": "Güncelleme kontrolü başarısız",
+  "update.section": "Güncellemeler",
 };
 
 const dictionaries: Record<Language, Dict> = { en, tr };
