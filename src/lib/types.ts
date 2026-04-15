@@ -31,6 +31,8 @@ export interface Card {
   todos: TodoItem[];
   position: CardPosition;
   visible: boolean;
+  minimized?: boolean;
+  expandedHeight?: number | null;
   createdAt: number;
   updatedAt: number;
 }

@@ -131,6 +131,8 @@ fn do_new_card(app: &AppHandle) {
                 height: 420,
             },
             visible: true,
+            minimized: false,
+            expanded_height: None,
             created_at: now_ts,
             updated_at: now_ts,
         };

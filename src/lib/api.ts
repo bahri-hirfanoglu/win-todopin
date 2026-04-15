@@ -33,6 +33,12 @@ export const api = {
     invoke<void>("delete_todo", { cardId, todoId }),
   clearCompleted: (cardId: string) =>
     invoke<void>("clear_completed", { cardId }),
+  reorderTodos: (cardId: string, ids: string[]) =>
+    invoke<void>("reorder_todos", { cardId, ids }),
+  restoreTodos: (cardId: string, items: TodoItem[]) =>
+    invoke<void>("restore_todos", { cardId, items }),
+  setCardMinimized: (id: string, minimized: boolean) =>
+    invoke<void>("set_card_minimized", { id, minimized }),
 
   // ---------- global ----------
   showAllCards: () => invoke<void>("show_all_cards"),

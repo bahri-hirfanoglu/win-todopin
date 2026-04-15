@@ -18,6 +18,16 @@
   let showSettings = $state(false);
   let pendingDeleteId = $state<string | null>(null);
   let recordingShortcut = $state<ShortcutAction | null>(null);
+  let searchQuery = $state("");
+
+  const filteredCards = $derived.by(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return cards;
+    return cards.filter((c) => {
+      if (c.title.toLowerCase().includes(q)) return true;
+      return c.todos.some((t) => t.text.toLowerCase().includes(q));
+    });
+  });
 
   const shortcutActions: { key: ShortcutAction; label: string }[] = [
     { key: "showAll", label: "shortcut.showAll" },
@@ -396,14 +406,43 @@
     </section>
   {/if}
 
+  {#if cards.length > 0}
+    <div class="search-row">
+      <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        class="search-input"
+        type="search"
+        bind:value={searchQuery}
+        placeholder={$t("manager.search")}
+      />
+      {#if searchQuery}
+        <button
+          class="search-clear"
+          onclick={() => (searchQuery = "")}
+          aria-label={$t("shortcut.clear")}
+        >
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+        </button>
+      {/if}
+    </div>
+  {/if}
+
   <section class="cards">
     {#if cards.length === 0}
       <div class="empty">
         <div class="empty-emoji">✨</div>
         <p>{$t("manager.empty")}</p>
       </div>
+    {:else if filteredCards.length === 0}
+      <div class="empty">
+        <div class="empty-emoji">🔍</div>
+        <p>{$t("manager.noResults")}</p>
+      </div>
     {:else}
-      {#each cards as card (card.id)}
+      {#each filteredCards as card (card.id)}
         <div
           class="card-row"
           style:--swatch-from={themes[card.theme].bgFrom}

@@ -93,6 +93,7 @@ pub fn spawn_card_window(app: &AppHandle, card: &Card) -> Result<()> {
     let always_on_top = matches!(card.mode, CardMode::Pinned);
     let skip_taskbar = matches!(card.mode, CardMode::Widget);
 
+    let min_h = if card.minimized { 48.0 } else { 260.0 };
     let win = WebviewWindowBuilder::new(
         app,
         &label,
@@ -101,7 +102,7 @@ pub fn spawn_card_window(app: &AppHandle, card: &Card) -> Result<()> {
     .title(format!("TodoPin — {}", card.title))
     .inner_size(pos.width as f64, pos.height as f64)
     .position(pos.x as f64, pos.y as f64)
-    .min_inner_size(240.0, 260.0)
+    .min_inner_size(240.0, min_h)
     .decorations(false)
     .transparent(true)
     .always_on_top(always_on_top)
@@ -180,6 +181,26 @@ pub fn apply_position(
             pos.height as f64,
         ))
         .map_err(|e| anyhow!("set_size: {e}"))?;
+    }
+    Ok(())
+}
+
+/// Apply minimize / restore to a card window. Adjusts min size so the OS
+/// accepts the compact height, then resizes.
+pub fn apply_minimized(
+    app: &AppHandle,
+    card_id: &str,
+    minimized: bool,
+    pos: CardPosition,
+) -> Result<()> {
+    let label = card_label(card_id);
+    if let Some(w) = app.get_webview_window(&label) {
+        let min_h = if minimized { 48.0 } else { 260.0 };
+        let _ = w
+            .set_min_size(Some(LogicalSize::new(240.0, min_h)))
+            .map_err(|e| anyhow!("set_min_size: {e}"));
+        w.set_size(LogicalSize::new(pos.width as f64, pos.height as f64))
+            .map_err(|e| anyhow!("set_size: {e}"))?;
     }
     Ok(())
 }

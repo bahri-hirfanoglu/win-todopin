@@ -464,6 +464,52 @@ input[type="checkbox"]:checked::after {
   white-space: nowrap;
 }
 
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--app-surface, rgba(255, 255, 255, 0.68));
+  border: 1px solid var(--app-border, rgba(120, 95, 170, 0.1));
+  border-radius: calc(var(--card-radius, 18px) - 6px);
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.search-row:focus-within {
+  border-color: var(--app-accent, #9b7bf0);
+  background: var(--app-surface-strong, rgba(255, 255, 255, 0.92));
+}
+.search-icon {
+  color: var(--app-text-muted, #8e7aa8);
+  flex-shrink: 0;
+}
+.search-input {
+  flex: 1;
+  font-size: 13px;
+  color: var(--app-text, #2a2140);
+  background: transparent;
+  font-family: inherit;
+}
+.search-input::placeholder {
+  color: var(--app-text-muted, #8e7aa8);
+}
+.search-input::-webkit-search-cancel-button {
+  display: none;
+}
+.search-clear {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: var(--app-text-muted, #8e7aa8);
+  transition: background 120ms ease, color 120ms ease;
+}
+.search-clear:hover {
+  background: var(--app-hover, rgba(120, 95, 170, 0.1));
+  color: var(--app-text, #2a2140);
+}
+
 .cards {
   flex: 1;
   overflow-y: auto;

@@ -29,6 +29,13 @@ TodoPin lets you create lightweight, frameless todo cards that float on your des
 
 - **Floating todo cards** — Frameless, draggable cards that sit on your desktop
 - **Pin or widget mode** — Keep cards always on top, or let them sit behind other windows
+- **Minimize to header** — Collapse a card to a compact title bar when you need the space back
+- **Edit in place** — Double-click or hit the pencil icon to rename a todo without re-adding
+- **Drag to reorder** — Grab the handle on any active todo and drop it into position
+- **Undo deletes** — 5-second toast with “Undo” after deleting a task or clearing completed
+- **Completed drawer** — Finished todos collapse into a section at the bottom, out of the way but one click from being re-opened
+- **Multi-line paste** — Paste several lines into the input to add them as separate todos
+- **Search across cards** — Filter the manager by card title or todo text
 - **7 card colors** — Peach, Lavender, Mint, Sky, Sunny, Rose, Slate
 - **6 app themes** — Default, Windows, macOS, GitHub Dark, Nord, Dracula
 - **Global keyboard shortcuts** — Show/hide all cards, create new cards, open manager (customizable)
@@ -36,6 +43,7 @@ TodoPin lets you create lightweight, frameless todo cards that float on your des
 - **System tray** — Runs quietly in the background with tray icon controls
 - **Bilingual** — English and Turkish interface
 - **Auto-start** — Optionally launch at Windows startup
+- **Auto-updater** — Checks GitHub releases on launch and applies updates with one click
 - **Lightweight** — ~4 MB installer, minimal memory usage
 
 <p align="center">
@@ -75,6 +83,7 @@ Installers will be in `src-tauri/target/release/bundle/`.
 The manager window is your central hub for managing all cards. From here you can:
 
 - Create new cards
+- Search cards by title or todo text
 - Show or hide all cards at once
 - Toggle card visibility individually
 - Delete cards
@@ -85,11 +94,15 @@ The manager window is your central hub for managing all cards. From here you can
 Each card is its own frameless window. You can:
 
 - **Drag** the card by its header area
-- **Add todos** using the input field at the bottom
-- **Check off** completed items
+- **Add todos** using the input field at the bottom (paste multi-line text to add several at once)
+- **Edit a todo** by double-clicking the text, or using the pencil icon — `Enter` saves, `Esc` cancels
+- **Check off** completed items — they move into the collapsible *Completed* drawer at the bottom
+- **Undo** an accidental delete using the 5-second toast
+- **Reorder** active todos by dragging the handle on the left
 - **Change the card color** via the menu (⋯)
 - **Pin/unpin** to toggle always-on-top mode
-- **Hide** to minimize the card (reopen from manager or tray)
+- **Minimize** to collapse the card into a compact title bar (click the minimize icon again to restore)
+- **Hide** to send the card away (reopen from manager or tray)
 
 ### Keyboard Shortcuts
 

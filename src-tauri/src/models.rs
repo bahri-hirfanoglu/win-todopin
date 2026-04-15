@@ -72,6 +72,10 @@ pub struct Card {
     pub todos: Vec<TodoItem>,
     pub position: CardPosition,
     pub visible: bool,
+    #[serde(default)]
+    pub minimized: bool,
+    #[serde(default)]
+    pub expanded_height: Option<u32>,
     pub created_at: i64,
     pub updated_at: i64,
 }

@@ -72,6 +72,8 @@ pub fn create_card(
                 height: 420,
             },
             visible: true,
+            minimized: false,
+            expanded_height: None,
             created_at: now_ts,
             updated_at: now_ts,
         };
@@ -328,6 +330,97 @@ pub fn clear_completed(
         }
     });
     emit_card_changed(&app, &card_id);
+    Ok(())
+}
+
+#[tauri::command]
+pub fn reorder_todos(
+    card_id: String,
+    ids: Vec<String>,
+    app: AppHandle,
+    state: State<SharedState>,
+) -> Result<()> {
+    state.with_data(|d| {
+        if let Some(c) = d.cards.iter_mut().find(|c| c.id == card_id) {
+            let mut by_id: std::collections::HashMap<String, TodoItem> =
+                c.todos.drain(..).map(|t| (t.id.clone(), t)).collect();
+            let mut reordered: Vec<TodoItem> = Vec::with_capacity(ids.len());
+            for id in &ids {
+                if let Some(t) = by_id.remove(id) {
+                    reordered.push(t);
+                }
+            }
+            // Append any items missing from the provided list (defensive).
+            for (_, t) in by_id.into_iter() {
+                reordered.push(t);
+            }
+            c.todos = reordered;
+            c.updated_at = now();
+        }
+    });
+    emit_card_changed(&app, &card_id);
+    Ok(())
+}
+
+#[tauri::command]
+pub fn restore_todos(
+    card_id: String,
+    items: Vec<TodoItem>,
+    app: AppHandle,
+    state: State<SharedState>,
+) -> Result<()> {
+    state.with_data(|d| {
+        if let Some(c) = d.cards.iter_mut().find(|c| c.id == card_id) {
+            for item in items {
+                // Skip if already present (avoid duplicate on rapid undo).
+                if !c.todos.iter().any(|t| t.id == item.id) {
+                    c.todos.push(item);
+                }
+            }
+            c.updated_at = now();
+        }
+    });
+    emit_card_changed(&app, &card_id);
+    Ok(())
+}
+
+#[tauri::command]
+pub fn set_card_minimized(
+    id: String,
+    minimized: bool,
+    app: AppHandle,
+    state: State<SharedState>,
+) -> Result<()> {
+    const MINIMIZED_HEIGHT: u32 = 56;
+
+    let target = {
+        let mut data = state.data.lock();
+        let Some(c) = data.cards.iter_mut().find(|c| c.id == id) else {
+            return Ok(());
+        };
+        if c.minimized == minimized {
+            return Ok(());
+        }
+        c.minimized = minimized;
+        c.updated_at = now();
+
+        if minimized {
+            let saved = c.position.height.max(MINIMIZED_HEIGHT + 1);
+            c.expanded_height = Some(saved);
+            c.position.height = MINIMIZED_HEIGHT;
+            Some((c.position, MINIMIZED_HEIGHT))
+        } else {
+            let restore = c.expanded_height.take().unwrap_or(420);
+            c.position.height = restore;
+            Some((c.position, restore))
+        }
+    };
+    state.mark_dirty();
+
+    if let Some((pos, _h)) = target {
+        let _ = windows::apply_minimized(&app, &id, minimized, pos);
+    }
+    emit_card_changed(&app, &id);
     Ok(())
 }
 

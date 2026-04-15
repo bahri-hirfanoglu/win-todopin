@@ -297,6 +297,220 @@ body[data-window="card"] {
   background: var(--card-btn-hover, rgba(255, 255, 255, 0.85));
 }
 
+.done-section {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--card-btn-hover, rgba(0, 0, 0, 0.08));
+}
+.done-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.done-toggle {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  background: transparent;
+  transition: background 120ms ease, color 120ms ease;
+  text-align: left;
+}
+.done-toggle:hover {
+  background: var(--card-btn-hover, rgba(255, 255, 255, 0.5));
+  color: var(--text);
+}
+.done-toggle .chev {
+  transition: transform 160ms ease;
+  flex-shrink: 0;
+}
+.done-section.open .done-toggle .chev {
+  transform: rotate(90deg);
+}
+.done-clear {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: var(--text-muted);
+  transition: color 120ms ease, background 120ms ease;
+  flex-shrink: 0;
+}
+.done-clear:hover {
+  color: var(--app-danger, #d23353);
+  background: var(--app-danger-bg, rgba(210, 51, 83, 0.1));
+}
+.done-list {
+  margin-top: 4px;
+}
+.done-list .todo-text {
+  opacity: 0.55;
+  text-decoration: line-through;
+  text-decoration-color: var(--text-muted);
+}
+
+/* ---- Drag handle & drop indicators ---- */
+.drag-handle {
+  opacity: 0.25;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 20px;
+  margin-left: -4px;
+  flex-shrink: 0;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 120ms ease;
+}
+.todo:hover .drag-handle {
+  opacity: 0.75;
+}
+.drag-handle:active {
+  cursor: grabbing;
+}
+.todo.dragging {
+  opacity: 0.4;
+}
+.todo.drop-before {
+  box-shadow: inset 0 2px 0 0 var(--accent);
+}
+.todo.drop-after {
+  box-shadow: inset 0 -2px 0 0 var(--accent);
+}
+body.drag-active {
+  cursor: grabbing !important;
+  user-select: none;
+}
+body.drag-active * {
+  cursor: grabbing !important;
+}
+
+/* ---- Inline edit ---- */
+.todo-edit {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.3;
+  padding: 2px 4px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+}
+.todo-edit-btn {
+  opacity: 0;
+  color: var(--text-muted);
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: opacity 120ms ease, color 120ms ease, background 120ms ease;
+}
+.todo:hover .todo-edit-btn {
+  opacity: 0.7;
+}
+.todo-edit-btn:hover {
+  opacity: 1;
+  color: var(--text);
+  background: var(--card-btn-hover, rgba(255, 255, 255, 0.6));
+}
+.todo-text {
+  cursor: text;
+}
+
+/* ---- Undo toast ---- */
+.undo-bar {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 58px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 12px;
+  background: var(--menu-surface, rgba(40, 40, 40, 0.92));
+  color: var(--text);
+  border: var(--menu-border, 1px solid rgba(255, 255, 255, 0.4));
+  border-radius: 10px;
+  box-shadow: var(--menu-shadow, 0 10px 24px rgba(0, 0, 0, 0.2));
+  font-size: 12px;
+  z-index: 3;
+  animation: undo-in 180ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+@keyframes undo-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.undo-text {
+  flex: 1;
+  color: var(--text);
+  opacity: 0.9;
+}
+.undo-btn {
+  padding: 4px 10px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+.undo-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.undo-close {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: background 120ms ease, color 120ms ease;
+}
+.undo-close:hover {
+  background: var(--card-btn-hover, rgba(255, 255, 255, 0.5));
+  color: var(--text);
+}
+
+/* ---- Minimized layout ---- */
+.card.minimized {
+  padding: 10px 12px;
+}
+.card.minimized .head {
+  height: 28px;
+}
+.mini-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
 .foot {
   display: flex;
   align-items: center;

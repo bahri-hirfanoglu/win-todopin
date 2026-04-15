@@ -1,6 +1,6 @@
 [package]
 name = "win-todopin"
-version = "0.3.1"
+version = "0.4.0"
 description = "Cute, pinnable todo cards for your Windows desktop"
 authors = ["you"]
 edition = "2021"
